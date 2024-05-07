@@ -1,0 +1,39 @@
+<div class="calendar-wrapper">
+  <div class="calendar-items">
+    <div class="first-col">
+      <div class="example-box time-item" *ngFor="let hour of hours; ">
+        <div class="hour">
+          {{ hour.name }}
+        </div>
+        &nbsp;
+      </div>
+    </div>
+    <div class="second-col">
+      <div
+        cdkDropList
+        [cdkDropListData]="events"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          *ngFor="let item of events; let index = index"
+          class="example-box"
+          [class.active]="item.hasEvent"
+          cdkDrag
+          [cdkDragDisabled]="!item.hasEvent"
+          (click)="onModifyEvent(index)"
+        >
+          <ng-container *ngIf="item.hasEvent">
+            <span>
+              {{ item.title || "(No title)" }}
+            </span>
+            <span>
+              {{ item.date | date : "HH:mm" }} -
+              {{ addHours(item.date, 1) | date : "HH:mm" }}</span
+            >
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

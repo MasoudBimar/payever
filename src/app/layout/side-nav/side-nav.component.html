@@ -1,0 +1,30 @@
+<mat-sidenav-container class="app-sidenav-container" [dir]="dir">
+  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'">
+    <mat-toolbar color="primary">
+     Menu
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <a matLine mat-list-item class="active">
+          Main Calendar
+      </a>
+    </mat-nav-list>
+    <div>
+      <mat-card class="inline-calendar-card">
+        <mat-calendar
+          [selected]="selectedDate"
+          (selectedChange)="onChangeDate($event)"
+        ></mat-calendar>
+      </mat-card>
+    </div>
+  </mat-sidenav>
+
+  <div class="app-sidenav-content">
+    <app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleDir)="toggleDir()">
+    </app-toolbar>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</mat-sidenav-container>
