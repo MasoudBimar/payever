@@ -16,7 +16,7 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
 
-      <mat-error *ngIf="f['date'].hasError('required')"> required! </mat-error>
+      <mat-error *ngIf="formControls['date'].hasError('required')"> required! </mat-error>
     </mat-form-field>
 
     <mat-form-field class="col-12">

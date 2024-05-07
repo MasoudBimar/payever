@@ -1,7 +1,7 @@
 <div class="calendar-wrapper">
   <div class="calendar-items">
     <div class="first-col">
-      <div class="example-box time-item" *ngFor="let hour of hours; ">
+      <div class="example-box time-item" *ngFor="let hour of appointmentManager.activeHours; ">
         <div class="hour">
           {{ hour.name }}
         </div>
@@ -13,10 +13,10 @@
         cdkDropList
         [cdkDropListData]="events"
         class="example-list"
-        (cdkDropListDropped)="drop($event)"
+        (cdkDropListDropped)="moveAppointment($event)"
       >
         <div
-          *ngFor="let item of events; let index = index"
+          *ngFor="let item of currentDayAppointments?.appointments; let index = index"
           class="example-box"
           [class.active]="item.hasEvent"
           cdkDrag

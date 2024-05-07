@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IEvent } from '../main-calendar/main-calendar.component';
+import { IAppointment } from '../model/appointment-manager';
 
 @Component({
   selector: 'app-new-appointment',
@@ -15,7 +15,7 @@ export class NewAppointmentComponent {
 
   constructor(
     public dialogRef: MatDialogRef<NewAppointmentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IEvent,
+    @Inject(MAT_DIALOG_DATA) public data: IAppointment,
     fb: FormBuilder
   ) {
     this.eventForm = fb.group({
@@ -24,11 +24,11 @@ export class NewAppointmentComponent {
       description: [],
     });
 
-    this.f['title'].setValue(data.title || '');
-    this.f['date'].setValue(data.date || '');
-    this.f['description'].setValue(data.description || '');
+    this.formControls['title'].setValue(data.title || '');
+    this.formControls['date'].setValue(data.date || '');
+    this.formControls['description'].setValue(data.description || '');
   }
-  get f() {
+  get formControls() {
     return this.eventForm.controls;
   }
 
