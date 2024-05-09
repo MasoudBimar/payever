@@ -6,6 +6,4 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedService {
   selectedDate: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
-
-  constructor() { }
 }

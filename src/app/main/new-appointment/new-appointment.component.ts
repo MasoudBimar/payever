@@ -9,39 +9,35 @@ import { IAppointment } from '../model/appointment-manager';
   styleUrls: ['./new-appointment.component.css']
 })
 export class NewAppointmentComponent {
-  eventForm: FormGroup = new FormGroup({});
+  appointmentForm: FormGroup = new FormGroup({});
 
   requiredFormControl = new FormControl('', [Validators.required]);
 
   constructor(
     public dialogRef: MatDialogRef<NewAppointmentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IAppointment,
-    fb: FormBuilder
+    formBuilder: FormBuilder
   ) {
-    this.eventForm = fb.group({
+    this.appointmentForm = formBuilder.group({
       title: [],
       date: this.requiredFormControl,
       description: [],
     });
 
-    this.formControls['title'].setValue(data.title || '');
-    this.formControls['date'].setValue(data.date || '');
-    this.formControls['description'].setValue(data.description || '');
+    this.appointmentForm.patchValue(data);
   }
   get formControls() {
-    return this.eventForm.controls;
+    return this.appointmentForm.controls;
   }
 
   onNoClick(): void {
-    debugger;
     this.dialogRef.close(null);
   }
 
-  onSaveEvent() {
-    if (this.eventForm.invalid) {
+  onSaveAppointment() {
+    if (this.appointmentForm.invalid) {
       return;
     }
-    // console.log(this.eventForm.value);
-    this.dialogRef.close(this.eventForm.value);
+    this.dialogRef.close(this.appointmentForm.value);
   }
 }

@@ -1,18 +1,18 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { SharedService } from 'src/app/services/shared.service';
 import { ScreenService } from '../../services/screen.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']
 })
-export class SideNavComponent {
+export class SideNavComponent implements OnInit, OnDestroy {
   selectedDate?: Date;
   dir: Direction = 'rtl';
   destroyed = new Subject<void>();
@@ -72,12 +72,27 @@ export class SideNavComponent {
     return this.currentScreenSize === 'Small' || this.currentScreenSize === 'XSmall';
   }
 
-  onChangeDate(event: any) {
+  onChangeDate(event: Date) {
     this.selectedDate = event;
     this.sharedService.selectedDate.next(event);
   }
   ngOnDestroy() {
     this.destroyed.next();
     this.destroyed.complete();
+  }
+  gotoToday() {
+    this.onChangeDate(new Date());
+  }
+
+  gotoTomorrow() {
+    const date = new Date((this.selectedDate ?? new Date()).toString());
+    date.setDate(date.getDate() + 1);
+    this.onChangeDate(date);
+  }
+
+  gotoYesterday() {
+    const date = new Date((this.selectedDate ?? new Date()).toString());
+    date.setDate(date.getDate() - 1);
+    this.onChangeDate(date);
   }
 }

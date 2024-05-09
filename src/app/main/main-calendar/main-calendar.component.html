@@ -1,0 +1,33 @@
+<div class="calendar-wrapper">
+  <div class="calendar-items">
+    <div class="first-col">
+      <div class="example-box time-item" *ngFor="let hour of appointmentManager.activeHours; ">
+        <div class="hour">
+          {{ hour.name }}
+        </div>
+        &nbsp;
+      </div>
+    </div>
+    <div class="second-col">
+      <div cdkDropList [cdkDropListData]="appointmentManager.currentDayAppointments.appointments" class="example-list"
+        (cdkDropListDropped)="moveAppointment($event)">
+        <button role="button"
+          *ngFor="let item of appointmentManager.currentDayAppointments?.appointments; let index = index" class="example-box"
+          [class.active]="item.hasEvent" cdkDrag [cdkDragDisabled]="!item.hasEvent" (click)="onCreateOrModifyAppointment(index)">
+          <ng-container *ngIf="item.hasEvent">
+            <button mat-icon-button class="close-button" (click)="removeAppointment($event, index)">
+              <mat-icon class="delete-icon" color="warn">delete</mat-icon>
+            </button>
+            <span>
+              {{ item.title || "(No title)" }}
+            </span>
+            <span>
+              {{ item.date | date : "HH:mm" }} -
+              {{ addHours(item.date, 1) | date : "HH:mm" }}
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

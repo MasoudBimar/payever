@@ -1,20 +1,25 @@
 <mat-sidenav-container class="app-sidenav-container" [dir]="dir">
   <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'">
     <mat-toolbar color="primary">
-     Menu
+      Menu
     </mat-toolbar>
 
     <mat-nav-list>
-      <a matLine mat-list-item class="active">
-          Main Calendar
-      </a>
+      <button mat-raised-button (click)="gotoToday()">
+        Today
+      </button>
+      &nbsp;
+      <button mat-button (click)="gotoYesterday()">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      &nbsp;
+      <button mat-button (click)="gotoTomorrow()">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
     </mat-nav-list>
     <div>
       <mat-card class="inline-calendar-card">
-        <mat-calendar
-          [selected]="selectedDate"
-          (selectedChange)="onChangeDate($event)"
-        ></mat-calendar>
+        <mat-calendar [selected]="selectedDate" (selectedChange)="onChangeDate($event)"></mat-calendar>
       </mat-card>
     </div>
   </mat-sidenav>
